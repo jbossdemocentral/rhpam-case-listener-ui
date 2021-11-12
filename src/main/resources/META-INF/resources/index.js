@@ -7,17 +7,19 @@ if (!!window.EventSource) {
         data = JSON.parse(event.data);
         console.log("data"+JSON.stringify(data));
 
-        var row = '<tr><td>' + data.correlationId + '</td><td>' + data.subProcessCorrelationId + '</td><td>' + data.entityType + '</td><td>' + data.entityId  ;
-            row+='<div class="icon"><i class="ni ni-fat-remove"></i></td>';
-            row+='<td><button class="btn btn-icon btn-primary" type="button" id="ajaxSubmit" onclick="checkout('+data.subProcessCorrelationId+')"><span class="btn-inner--icon">Details<i class="ni ni-bold-right"></i></span></button>';
+        var rowHeader = ' <li class="pf-c-data-list__item" aria-labelledby="data-list-basic-item-1"><div class="pf-c-data-list__item-row"><div class="pf-c-data-list__item-content">';
+        var eventDate = new Date(data.eventTimeStamp);
 
-
-
-
-
-         row+='</tr><tr width="200px" id="svg" style="width:100%"></tr>';
-
-        $('#tbody').append(row);
+        var row = '<div class="pf-c-data-list__cell">'+data.caseId+'</div>' + '<div class="pf-c-data-list__cell">'+data.status+'</div>'+'<div>'+eventDate.toString() +'</div>';
+        var additionalRow;
+        if(data.status == 'Case Data Added') {
+            additionalRow = '<div class="pf-c-data-list__item-content"><div class="pf-c-data-list__cell">Case Data</div></div><div class="pf-c-data-list__item-content" style="background:#d5dcde"><div class="pf-c-data-list__cell" style="padding-left:10px">'+JSON.stringify(data.caseData)+'</div></div>'
+        }
+        if(additionalRow != undefined) {
+        $('#tbody').prepend(rowHeader+row+additionalRow+'</div></div></li>');
+        }else {
+         $('#tbody').prepend(rowHeader+row+'</div></div></li>');
+        }
     };
 
 
