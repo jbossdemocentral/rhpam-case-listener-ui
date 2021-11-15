@@ -15,6 +15,11 @@ if (!!window.EventSource) {
         if(data.status == 'Case Data Added') {
             additionalRow = '<div class="pf-c-data-list__item-content"><div class="pf-c-data-list__cell">Case Data</div></div><div class="pf-c-data-list__item-content" style="background:#d5dcde"><div class="pf-c-data-list__cell" style="padding-left:10px">'+JSON.stringify(data.caseData)+'</div></div>'
         }
+
+        if(data.status == 'Comments Added') {
+                    additionalRow = '<div class="pf-c-data-list__item-content"><div class="pf-c-data-list__cell">Case Data</div></div><div class="pf-c-data-list__item-content" style="background:#d5dcde"><div class="pf-c-data-list__cell" style="padding-left:10px">'+JSON.stringify(data.caseComments)+'</div></div>'
+                }
+
         if(additionalRow != undefined) {
         $('#tbody').prepend(rowHeader+row+additionalRow+'</div></div></li>');
         }else {
